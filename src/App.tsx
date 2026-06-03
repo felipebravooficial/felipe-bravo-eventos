@@ -770,7 +770,7 @@ export default function App() {
                               initial={{ y: 40, opacity: 0 }}
                               animate={{ y: 0, opacity: 1 }}
                               transition={{ delay: 0.4, type: "spring" }}
-                              className="text-6xl md:text-8xl font-display font-black italic uppercase tracking-tighter leading-[0.85] text-white drop-shadow-2xl"
+                              className="text-4xl md:text-6xl font-display font-black italic uppercase tracking-tighter leading-[0.95] text-white drop-shadow-2xl py-1.5"
                             >
                               {currentEvent.evento}
                             </motion.h3>
@@ -778,7 +778,7 @@ export default function App() {
                               initial={{ y: 40, opacity: 0 }}
                               animate={{ y: 0, opacity: 1 }}
                               transition={{ delay: 0.5 }}
-                              className="text-2xl md:text-3xl text-zinc-400 font-medium leading-relaxed max-w-3xl"
+                              className="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed max-w-3xl"
                             >
                               {currentEvent.descricao}
                             </motion.p>
@@ -803,7 +803,7 @@ export default function App() {
                                   </motion.div>
                                   <div className="space-y-2">
                                     <h4 className="text-xs font-black uppercase tracking-[0.3em] text-emerald-500">Consequência Direta</h4>
-                                    <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                                    <p className="text-xl md:text-2xl font-bold text-white leading-tight">
                                       {currentEvent.consequencia}
                                     </p>
                                   </div>
