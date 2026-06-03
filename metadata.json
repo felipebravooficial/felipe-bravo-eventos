@@ -1,0 +1,5 @@
+{
+  "name": "Gerador de Eventos EA FC 26",
+  "description": "Um gerador de eventos extracampo para saves de modo carreira de futebol, com sistema de raridade e histórico.",
+  "requestFramePermissions": []
+}

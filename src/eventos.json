@@ -1,0 +1,1298 @@
+[
+  {
+    "id": 1,
+    "evento": "Aposentadoria inesperada",
+    "descricao": "Um jogador encerra a carreira de forma repentina, alterando o planejamento do elenco.",
+    "consequencia": "Remova o atleta do elenco principal e ajuste a rotação.",
+    "categoria": "Elenco",
+    "raridade": "Comum"
+  },
+  {
+    "id": 2,
+    "evento": "Licença temporária familiar",
+    "descricao": "O atleta precisa se ausentar por motivo pessoal ou familiar.",
+    "consequencia": "Deixe o jogador fora de 1 a 3 partidas.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 3,
+    "evento": "Problema bancário do clube",
+    "descricao": "Uma falha bancária bloqueia operações financeiras do clube.",
+    "consequencia": "Fique uma janela sem fazer transferências ou renovações pagas.",
+    "categoria": "Financeiro",
+    "raridade": "Raro"
+  },
+  {
+    "id": 4,
+    "evento": "Erro no orçamento",
+    "descricao": "Um erro administrativo reduz o caixa disponível.",
+    "consequencia": "Reduza manualmente parte do orçamento de transferências/salários.",
+    "categoria": "Financeiro",
+    "raridade": "Comum"
+  },
+  {
+    "id": 5,
+    "evento": "Injeção de dinheiro da diretoria",
+    "descricao": "Os donos do clube liberam verba extra inesperada.",
+    "consequencia": "Aumente o orçamento disponível para uma contratação.",
+    "categoria": "Diretoria",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 6,
+    "evento": "Explosão de patrocínio",
+    "descricao": "Novo acordo comercial fortalece o caixa do clube.",
+    "consequencia": "Adicione verba extra ao orçamento e aumente a pressão por resultados.",
+    "categoria": "Financeiro",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 7,
+    "evento": "Nova propriedade do clube",
+    "descricao": "Um novo grupo assume o controle do clube e muda as metas.",
+    "consequencia": "Altere seus objetivos da temporada e aumente a cobrança interna.",
+    "categoria": "Diretoria",
+    "raridade": "Raro"
+  },
+  {
+    "id": 8,
+    "evento": "Interferência da diretoria",
+    "descricao": "Os dirigentes exigem uma ação esportiva específica.",
+    "consequencia": "Escale ou negocie o jogador indicado pela diretoria.",
+    "categoria": "Diretoria",
+    "raridade": "Comum"
+  },
+  {
+    "id": 9,
+    "evento": "Impasse contratual",
+    "descricao": "Um atleta exige renovação ou ameaça sair.",
+    "consequencia": "Renove em condições melhores ou coloque o jogador à venda.",
+    "categoria": "Contratos",
+    "raridade": "Comum"
+  },
+  {
+    "id": 10,
+    "evento": "Perda de confiança",
+    "descricao": "O atleta perde segurança emocional após má fase.",
+    "consequencia": "Reduza a minutagem do jogador ou mantenha-o sob pressão por 3 jogos.",
+    "categoria": "Psicológico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 11,
+    "evento": "Jogador sob pressão",
+    "descricao": "O peso da expectativa afeta o desempenho emocional do atleta.",
+    "consequencia": "Mantenha o jogador por 2 jogos ou tire-o do time para protegê-lo.",
+    "categoria": "Psicológico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 12,
+    "evento": "Comida estragada antes do jogo",
+    "descricao": "Parte do elenco sofre intoxicação alimentar no pré-jogo.",
+    "consequencia": "Deixe 2 a 4 jogadores fora da partida seguinte.",
+    "categoria": "Logística",
+    "raridade": "Raro"
+  },
+  {
+    "id": 13,
+    "evento": "Caos no hotel",
+    "descricao": "Barulho e confusão impedem o descanso do elenco em viagem.",
+    "consequencia": "Aplique queda de rendimento no jogo seguinte.",
+    "categoria": "Logística",
+    "raridade": "Comum"
+  },
+  {
+    "id": 14,
+    "evento": "Atraso na viagem",
+    "descricao": "Um problema de transporte afeta a preparação da equipe.",
+    "consequencia": "Jogue a próxima partida com time alternativo ou cansado.",
+    "categoria": "Logística",
+    "raridade": "Comum"
+  },
+  {
+    "id": 15,
+    "evento": "Tática vazada na mídia",
+    "descricao": "Suas ideias de jogo são expostas antes da partida.",
+    "consequencia": "Mude o esquema tático planejado para o jogo seguinte.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 16,
+    "evento": "Salários vazados",
+    "descricao": "A folha salarial vira assunto público e gera ciúmes internos.",
+    "consequencia": "Reduza o moral de 2 jogadores e administre o vestiário.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 17,
+    "evento": "Entrevista explosiva",
+    "descricao": "Um jogador ou membro do clube cria crise pública com declarações fortes.",
+    "consequencia": "Afaste o envolvido por 1 jogo ou convoque reunião interna.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 18,
+    "evento": "Pressão da torcida",
+    "descricao": "A arquibancada exige reação imediata após resultados ruins.",
+    "consequencia": "Considere o próximo jogo como decisivo para moral e ambiente.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 19,
+    "evento": "Briga interna no vestiário",
+    "descricao": "Dois jogadores se desentendem após derrota ou disputa por espaço.",
+    "consequencia": "Suspenda um dos envolvidos por 1 partida ou puna ambos.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 20,
+    "evento": "Influência de empresário",
+    "descricao": "O agente de um atleta pressiona por mais minutos ou transferência.",
+    "consequencia": "Escale o jogador nas próximas 2 partidas ou aceite queda de moral.",
+    "categoria": "Empresário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 21,
+    "evento": "Traição contratual",
+    "descricao": "Um jogador assina pré-contrato com rival e a notícia vaza.",
+    "consequencia": "Afaste o atleta ou aceite desconfiança do elenco até o fim da temporada.",
+    "categoria": "Contratos",
+    "raridade": "Raro"
+  },
+  {
+    "id": 22,
+    "evento": "Caso de doping",
+    "descricao": "Um atleta é flagrado em exame antidoping.",
+    "consequencia": "Deixe o jogador suspenso de 3 a 6 jogos.",
+    "categoria": "Disciplina",
+    "raridade": "Raro"
+  },
+  {
+    "id": 23,
+    "evento": "Protesto da torcida",
+    "descricao": "Torcedores cercam ônibus ou treino para cobrar o elenco.",
+    "consequencia": "Considere pressão alta nos próximos 2 jogos.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 24,
+    "evento": "Escândalo fora de campo",
+    "descricao": "Um jogador se envolve em noitada, briga ou polêmica pessoal.",
+    "consequencia": "Afaste o atleta por 1 jogo e trate a crise de imagem.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 25,
+    "evento": "Clima extremo",
+    "descricao": "Uma condição climática severa interfere na rotina do time.",
+    "consequencia": "Aplique dificuldade extra ou adie o impacto para a partida seguinte.",
+    "categoria": "Logística",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 26,
+    "evento": "Problema com patrocinador",
+    "descricao": "O patrocinador principal ameaça romper contrato.",
+    "consequencia": "Reduza o orçamento e evite gastos por um período.",
+    "categoria": "Financeiro",
+    "raridade": "Raro"
+  },
+  {
+    "id": 27,
+    "evento": "Nova promessa descoberta",
+    "descricao": "Um jovem talento surge inesperadamente para o clube.",
+    "consequencia": "Promova um jogador da base e abra espaço no elenco.",
+    "categoria": "Base",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 28,
+    "evento": "Conflito tático",
+    "descricao": "Parte do elenco questiona o modelo de jogo do treinador.",
+    "consequencia": "Mude a formação por 2 jogos e avalie a reação do grupo.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 29,
+    "evento": "Vazamento de mensagens",
+    "descricao": "Conversas internas do clube aparecem na imprensa.",
+    "consequencia": "Escolha entre pedido público de desculpas ou manter postura dura.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 30,
+    "evento": "Erro de registro de jogador",
+    "descricao": "Um problema burocrático indica uso irregular de atleta.",
+    "consequencia": "Aplique multa interna ou considere perda simbólica de pontos.",
+    "categoria": "Administrativo",
+    "raridade": "Raro"
+  },
+  {
+    "id": 31,
+    "evento": "Visita de ídolo do clube",
+    "descricao": "Uma lenda do clube aparece para motivar elenco e base.",
+    "consequencia": "Aumente o moral geral e dê chance a um jovem.",
+    "categoria": "Motivação",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 32,
+    "evento": "Jogador fiel ao clube",
+    "descricao": "Um atleta decide renovar por identificação com o projeto.",
+    "consequencia": "Renove o contrato em condições amigáveis ou premie com destaque interno.",
+    "categoria": "Contratos",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 33,
+    "evento": "Campanha solidária",
+    "descricao": "O elenco participa de ação social importante do clube.",
+    "consequencia": "Aumente moral do grupo, mas aceite leve desgaste físico/mental.",
+    "categoria": "Clube",
+    "raridade": "Comum"
+  },
+  {
+    "id": 34,
+    "evento": "Roubo no centro de treinamento",
+    "descricao": "Equipamentos ou materiais do CT desaparecem.",
+    "consequencia": "Reduza a qualidade dos treinos por uma semana.",
+    "categoria": "Infraestrutura",
+    "raridade": "Raro"
+  },
+  {
+    "id": 35,
+    "evento": "Mudança de gramado",
+    "descricao": "O clube troca o tipo de gramado do estádio ou CT.",
+    "consequencia": "Aceite adaptação com risco maior de desconforto ou lesão leve.",
+    "categoria": "Infraestrutura",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 36,
+    "evento": "Jogador suspenso disciplinarmente",
+    "descricao": "Um atleta acumula atos de indisciplina.",
+    "consequencia": "Deixe o jogador fora de 2 partidas.",
+    "categoria": "Disciplina",
+    "raridade": "Comum"
+  },
+  {
+    "id": 37,
+    "evento": "Treinador investigado",
+    "descricao": "Uma denúncia ou polêmica coloca o técnico no centro da crise.",
+    "consequencia": "Faça do próximo jogo uma resposta pública obrigatória.",
+    "categoria": "Treinador",
+    "raridade": "Raro"
+  },
+  {
+    "id": 38,
+    "evento": "Convite para seleção",
+    "descricao": "O trabalho no clube chama atenção de uma seleção nacional.",
+    "consequencia": "Escolha focar no clube e lidar com agenda e pressão extras simbolicamente.",
+    "categoria": "Treinador",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 39,
+    "evento": "Queda de motivação coletiva",
+    "descricao": "O grupo entra em fase de desânimo e pouca energia.",
+    "consequencia": "Considere 3 jogos com moral mais baixa no elenco.",
+    "categoria": "Psicológico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 40,
+    "evento": "Processo administrativo contra clube",
+    "descricao": "Um ex-dirigente ou parceiro cria problema jurídico/administrativo.",
+    "consequencia": "Reduza orçamento ou congele um plano de contratação.",
+    "categoria": "Administrativo",
+    "raridade": "Raro"
+  },
+  {
+    "id": 41,
+    "evento": "Herói inesperado",
+    "descricao": "Um reserva cresce internamente e ganha o grupo sem esperar.",
+    "consequencia": "Aumente a moral do atleta e dê mais minutos nas próximas partidas.",
+    "categoria": "Elenco",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 42,
+    "evento": "Torcida dividida",
+    "descricao": "Setores da torcida entram em conflito sobre clube e treinador.",
+    "consequencia": "Considere ambiente hostil em jogos em casa até resposta em campo.",
+    "categoria": "Torcida",
+    "raridade": "Raro"
+  },
+  {
+    "id": 43,
+    "evento": "Falha médica",
+    "descricao": "O departamento médico erra avaliação e agrava um caso.",
+    "consequencia": "Aumente o tempo de ausência do jogador lesionado.",
+    "categoria": "Departamento médico",
+    "raridade": "Raro"
+  },
+  {
+    "id": 44,
+    "evento": "Jogador viraliza na internet",
+    "descricao": "Um atleta estoura nas redes por motivo positivo ou curioso.",
+    "consequencia": "Aumente valor simbólico do atleta, mas monitore foco.",
+    "categoria": "Mídia",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 45,
+    "evento": "Espião em treino",
+    "descricao": "Um olheiro rival observa informações do seu trabalho.",
+    "consequencia": "Mude a estratégia planejada do próximo jogo.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 46,
+    "evento": "Mudança de capitão",
+    "descricao": "O grupo deixa de seguir o capitão atual.",
+    "consequencia": "Escolha um novo capitão e lide com a reação do antigo.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 47,
+    "evento": "Campanha social do clube",
+    "descricao": "O clube assume papel público em causa social relevante.",
+    "consequencia": "Aumente reputação e moral, com leve distração competitiva.",
+    "categoria": "Clube",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 48,
+    "evento": "Greve de funcionários",
+    "descricao": "Funcionários do clube param atividades por atrasos ou conflito.",
+    "consequencia": "Suspenda treinos por alguns dias ou reduza orçamento para resolver.",
+    "categoria": "Administrativo",
+    "raridade": "Raro"
+  },
+  {
+    "id": 49,
+    "evento": "Problema com a polícia",
+    "descricao": "Um jogador é flagrado em ocorrência policial ou confusão noturna.",
+    "consequencia": "Suspenda o atleta por 2 jogos e trate o caso internamente.",
+    "categoria": "Pessoal",
+    "raridade": "Raro"
+  },
+  {
+    "id": 50,
+    "evento": "Jogador preso temporariamente",
+    "descricao": "O atleta é detido por algumas horas ou dias.",
+    "consequencia": "Deixe o jogador fora por 1 semana.",
+    "categoria": "Pessoal",
+    "raridade": "Raro"
+  },
+  {
+    "id": 51,
+    "evento": "Família desaparecida ou doente",
+    "descricao": "Um problema grave com familiar abala o atleta.",
+    "consequencia": "Dê licença de 2 a 4 jogos ao jogador.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 52,
+    "evento": "Parente desconhecido aparece",
+    "descricao": "Um irmão ou parente surge de repente e mexe com o emocional do atleta.",
+    "consequencia": "Considere queda de foco por 2 partidas.",
+    "categoria": "Pessoal",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 53,
+    "evento": "Briga física no treino",
+    "descricao": "Dois atletas trocam agressões durante atividade fechada.",
+    "consequencia": "Suspenda ambos por 1 jogo e abaixe o moral do grupo.",
+    "categoria": "Vestiário",
+    "raridade": "Raro"
+  },
+  {
+    "id": 54,
+    "evento": "Sonho de ir para outro clube",
+    "descricao": "Um jogador admite querer sair para projeto maior.",
+    "consequencia": "Coloque o atleta à venda ou prometa protagonismo e melhor contrato.",
+    "categoria": "Transferência",
+    "raridade": "Comum"
+  },
+  {
+    "id": 55,
+    "evento": "Problemas conjugais",
+    "descricao": "Questões no relacionamento afetam o dia a dia do atleta.",
+    "consequencia": "Considere queda de rendimento e moral por 3 jogos.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 56,
+    "evento": "Excesso de festas",
+    "descricao": "Um jovem atleta exagera na vida noturna.",
+    "consequencia": "Aplique punição disciplinar ou proteção com conversa interna.",
+    "categoria": "Disciplina",
+    "raridade": "Comum"
+  },
+  {
+    "id": 57,
+    "evento": "Jogador vira influencer",
+    "descricao": "O atleta passa a focar demais em redes, publicidade e imagem.",
+    "consequencia": "Aceite ciúmes no elenco e queda de concentração.",
+    "categoria": "Mídia",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 58,
+    "evento": "Ameaças de torcedores",
+    "descricao": "O jogador recebe ameaças após erros ou má fase.",
+    "consequencia": "Afaste o atleta temporariamente ou faça nota pública de apoio.",
+    "categoria": "Torcida",
+    "raridade": "Raro"
+  },
+  {
+    "id": 59,
+    "evento": "Jogador desaparece do treino",
+    "descricao": "Um atleta falta sem avisar e some por um período curto.",
+    "consequencia": "Suspenda o jogador por 2 jogos.",
+    "categoria": "Disciplina",
+    "raridade": "Raro"
+  },
+  {
+    "id": 60,
+    "evento": "Problemas de vício",
+    "descricao": "O atleta admite dificuldade com álcool, apostas ou outro vício.",
+    "consequencia": "Afaste o jogador para tratamento e reorganize o elenco.",
+    "categoria": "Saúde mental",
+    "raridade": "Raro"
+  },
+  {
+    "id": 61,
+    "evento": "Crise financeira pessoal",
+    "descricao": "Más decisões financeiras pressionam a vida privada do atleta.",
+    "consequencia": "Adiante salário simbolicamente ou aceite queda de foco.",
+    "categoria": "Pessoal",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 62,
+    "evento": "Nascimento de filho",
+    "descricao": "O atleta pede liberação para acompanhar o nascimento do filho.",
+    "consequencia": "Deixe o jogador fora de 1 jogo e aumente moral no retorno.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 63,
+    "evento": "Divórcio traumático",
+    "descricao": "Separação desgastante mexe com a cabeça do atleta.",
+    "consequencia": "Considere queda de desempenho por 5 jogos.",
+    "categoria": "Pessoal",
+    "raridade": "Raro"
+  },
+  {
+    "id": 64,
+    "evento": "Doença familiar grave",
+    "descricao": "Um familiar muito próximo entra em tratamento.",
+    "consequencia": "Dê apoio e reduza a cobrança sobre o atleta por algumas partidas.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 65,
+    "evento": "Fã stalker",
+    "descricao": "Um torcedor obsessivo passa a perseguir jogador e família.",
+    "consequencia": "Avalie pedido de afastamento ou até vontade de sair do clube.",
+    "categoria": "Segurança",
+    "raridade": "Raro"
+  },
+  {
+    "id": 66,
+    "evento": "Promessa pessoal motivadora",
+    "descricao": "O jogador estabelece um objetivo íntimo e simbólico para a temporada.",
+    "consequencia": "Aumente a moral do atleta por um período curto.",
+    "categoria": "Psicológico",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 67,
+    "evento": "Jogador admite depressão",
+    "descricao": "O atleta revela quadro depressivo e precisa de suporte sério.",
+    "consequencia": "Afaste o jogador de 2 a 6 jogos e ofereça apoio psicológico.",
+    "categoria": "Saúde mental",
+    "raridade": "Raro"
+  },
+  {
+    "id": 68,
+    "evento": "Jogador perde confiança após pênalti perdido",
+    "descricao": "Um lance traumático recente abala emocionalmente o atleta e muda o ambiente ao redor dele.",
+    "consequencia": "Reduza o moral do jogador por 3 jogos e tire cobranças de pênalti dele temporariamente.",
+    "categoria": "Psicológico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 69,
+    "evento": "Capitão questiona o treinador",
+    "descricao": "O capitão discorda publicamente das ideias e métodos da comissão técnica.",
+    "consequencia": "Mantenha a braçadeira ou troque o capitão e absorva o impacto no grupo.",
+    "categoria": "Vestiário",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 70,
+    "evento": "Panelinha no elenco",
+    "descricao": "Um grupo de jogadores passa a agir em bloco no vestiário.",
+    "consequencia": "Escale ou prestigie parte do grupo por 3 jogos para evitar desgaste maior.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 71,
+    "evento": "Veterano reclama do banco",
+    "descricao": "Um jogador experiente entende que perdeu espaço injustamente.",
+    "consequencia": "Dê 2 jogos ao veterano ou aceite forte queda de moral.",
+    "categoria": "Elenco",
+    "raridade": "Comum"
+  },
+  {
+    "id": 72,
+    "evento": "Jovem promessa com ego inflado",
+    "descricao": "Um jovem talento passa a agir acima do grupo.",
+    "consequencia": "Aplique medida disciplinar ou aceite queda de ambiente no vestiário.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 73,
+    "evento": "Jornal acusa time de jogar feio",
+    "descricao": "A imprensa passa a atacar publicamente o estilo da equipe.",
+    "consequencia": "A diretoria cobra reação com atuação convincente no próximo jogo.",
+    "categoria": "Imprensa",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 74,
+    "evento": "Jornalista cria crise",
+    "descricao": "Uma reportagem sensacionalista planta rumor de rachadura no elenco.",
+    "consequencia": "Considere desgaste no vestiário por 2 jogos e faça gestão de grupo.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 75,
+    "evento": "Comparação com treinador rival",
+    "descricao": "A mídia exalta outro técnico e coloca seu trabalho sob suspeita.",
+    "consequencia": "Considere o próximo jogo como resposta pública à pressão.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 76,
+    "evento": "Jogador vira meme",
+    "descricao": "Uma falha do atleta explode nas redes e vira chacota nacional.",
+    "consequencia": "Reduza moral e exposição do jogador por um período curto.",
+    "categoria": "Mídia",
+    "raridade": "Comum"
+  },
+  {
+    "id": 77,
+    "evento": "Jogador faz declaração polêmica",
+    "descricao": "Uma fala mal colocada do atleta gera desgaste com torcedores e imprensa.",
+    "consequencia": "Multa interna e possível afastamento por 1 jogo.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 78,
+    "evento": "Clube atrasa salário",
+    "descricao": "Problema de caixa atrasa pagamentos e abala confiança dos jogadores.",
+    "consequencia": "Reduza o moral geral do elenco até regularizar simbolicamente a situação.",
+    "categoria": "Financeiro",
+    "raridade": "Raro"
+  },
+  {
+    "id": 79,
+    "evento": "Multa da federação",
+    "descricao": "O clube é punido por comportamento inadequado de torcida ou gestão.",
+    "consequencia": "Diminua o orçamento disponível imediatamente.",
+    "categoria": "Administrativo",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 80,
+    "evento": "Premiação inesperada",
+    "descricao": "Uma bonificação não prevista entra nos cofres do clube.",
+    "consequencia": "Aumente o orçamento para contratações ou renovações.",
+    "categoria": "Financeiro",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 81,
+    "evento": "Patrocínio cancelado",
+    "descricao": "Um parceiro comercial decide sair antes do previsto.",
+    "consequencia": "Reduza o orçamento e adie um plano de investimento.",
+    "categoria": "Financeiro",
+    "raridade": "Raro"
+  },
+  {
+    "id": 82,
+    "evento": "Venda recorde de camisas",
+    "descricao": "Um atleta ou momento do clube explode comercialmente.",
+    "consequencia": "Adicione verba extra e aumente a pressão sobre a figura em evidência.",
+    "categoria": "Financeiro",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 83,
+    "evento": "Torcida invade treino",
+    "descricao": "A cobrança sai do controle após sequência negativa.",
+    "consequencia": "Considere ambiente pesado até a próxima vitória.",
+    "categoria": "Torcida",
+    "raridade": "Raro"
+  },
+  {
+    "id": 84,
+    "evento": "Torcida faz mosaico gigante",
+    "descricao": "A arquibancada dá demonstração pública de apoio total ao grupo.",
+    "consequencia": "Aumente o moral coletivo nas próximas partidas.",
+    "categoria": "Torcida",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 85,
+    "evento": "Vaias pesadas",
+    "descricao": "O estádio passa a reagir de forma hostil ao desempenho recente.",
+    "consequencia": "Reduza a confiança do elenco em jogos em casa.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 86,
+    "evento": "Protesto contra diretoria",
+    "descricao": "O alvo principal da torcida é a gestão do clube.",
+    "consequencia": "Aumente a instabilidade institucional e a pressão sobre decisões internas.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 87,
+    "evento": "Apoio da torcida visitante",
+    "descricao": "A equipe recebe apoio surpreendente fora de casa.",
+    "consequencia": "Aumente o moral do grupo para a partida seguinte.",
+    "categoria": "Torcida",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 88,
+    "evento": "Lesão mal diagnosticada",
+    "descricao": "Uma avaliação médica errada piora um caso que parecia simples.",
+    "consequencia": "Amplie o tempo de recuperação do atleta lesionado.",
+    "categoria": "Departamento médico",
+    "raridade": "Raro"
+  },
+  {
+    "id": 89,
+    "evento": "Epidemia de gripe",
+    "descricao": "Uma doença viral atinge parte do elenco e staff.",
+    "consequencia": "Deixe 2 a 4 jogadores indisponíveis temporariamente.",
+    "categoria": "Saúde",
+    "raridade": "Comum"
+  },
+  {
+    "id": 90,
+    "evento": "Jogador quer jogar no sacrifício",
+    "descricao": "Mesmo sem estar 100%, o atleta pressiona para atuar.",
+    "consequencia": "Use o atleta com risco de agravar situação ou proteja-o e aceite sua insatisfação.",
+    "categoria": "Departamento médico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 91,
+    "evento": "Cirurgia inesperada",
+    "descricao": "O quadro clínico de um atleta exige procedimento cirúrgico não planejado.",
+    "consequencia": "Deixe o jogador fora por cerca de 2 meses.",
+    "categoria": "Departamento médico",
+    "raridade": "Raro"
+  },
+  {
+    "id": 92,
+    "evento": "Recuperação milagrosa",
+    "descricao": "Um jogador supera o prazo inicial e volta antes do esperado.",
+    "consequencia": "Libere o atleta mais cedo e aumente seu moral.",
+    "categoria": "Departamento médico",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 93,
+    "evento": "Clube europeu observa jogador",
+    "descricao": "Olheiros do exterior passam a acompanhar um destaque do elenco.",
+    "consequencia": "Aumente o valor de mercado e o risco de proposta futura.",
+    "categoria": "Transferência",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 94,
+    "evento": "Oferta irrecusável",
+    "descricao": "Chega uma proposta muito acima do esperado por um atleta.",
+    "consequencia": "A diretoria pressiona pela venda.",
+    "categoria": "Transferência",
+    "raridade": "Raro"
+  },
+  {
+    "id": 95,
+    "evento": "Jogador rejeita transferência",
+    "descricao": "Mesmo sondado, o atleta declara vontade de continuar no projeto.",
+    "consequencia": "Aumente moral e identificação do jogador com o clube.",
+    "categoria": "Transferência",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 96,
+    "evento": "Jogador força saída",
+    "descricao": "O atleta usa empresário e imprensa para sair rapidamente.",
+    "consequencia": "Coloque o jogador à venda ou aceite clima ruim no vestiário.",
+    "categoria": "Transferência",
+    "raridade": "Comum"
+  },
+  {
+    "id": 97,
+    "evento": "Rival tenta contratar seu jogador",
+    "descricao": "Um concorrente direto mira peça importante do elenco.",
+    "consequencia": "Negocie renovação urgente ou prepare venda na próxima janela.",
+    "categoria": "Transferência",
+    "raridade": "Comum"
+  },
+  {
+    "id": 98,
+    "evento": "Treino extremamente intenso",
+    "descricao": "A comissão exagera na carga física da semana.",
+    "consequencia": "Aplique cansaço extra em parte do elenco.",
+    "categoria": "Treino",
+    "raridade": "Comum"
+  },
+  {
+    "id": 99,
+    "evento": "Treino perfeito",
+    "descricao": "A semana de trabalho flui muito acima do esperado.",
+    "consequencia": "Aumente levemente o moral e a confiança do grupo.",
+    "categoria": "Treino",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 100,
+    "evento": "Jogador impressiona no treino",
+    "descricao": "Um atleta cresce internamente e chama atenção da comissão.",
+    "consequencia": "Dê chance maior de minutagem nas próximas partidas.",
+    "categoria": "Treino",
+    "raridade": "Comum"
+  },
+  {
+    "id": 101,
+    "evento": "Discussão no treino",
+    "descricao": "Um atrito verbal sério interrompe a atividade.",
+    "consequencia": "Reduza o ambiente do grupo até uma conversa interna.",
+    "categoria": "Treino",
+    "raridade": "Comum"
+  },
+  {
+    "id": 102,
+    "evento": "Jogador chega atrasado",
+    "descricao": "Um atleta quebra regra básica de pontualidade.",
+    "consequencia": "Aplique multa ou suspensão simbólica.",
+    "categoria": "Disciplina",
+    "raridade": "Comum"
+  },
+  {
+    "id": 103,
+    "evento": "Jogador vira pai",
+    "descricao": "O elenco celebra um momento familiar importante de um companheiro.",
+    "consequencia": "Liberte o atleta por 1 jogo e aumente sua moral no retorno.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 104,
+    "evento": "Jogador casa",
+    "descricao": "O atleta vive momento positivo fora de campo.",
+    "consequencia": "Aumente o moral individual por algumas semanas.",
+    "categoria": "Pessoal",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 105,
+    "evento": "Separação traumática",
+    "descricao": "O fim de relacionamento afeta concentração e humor do atleta.",
+    "consequencia": "Considere queda de desempenho e moral por algumas partidas.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 106,
+    "evento": "Mudança de cidade difícil",
+    "descricao": "O jogador ou família não se adapta bem à nova cidade.",
+    "consequencia": "Aumente o tempo de adaptação e considere pedido futuro de saída.",
+    "categoria": "Pessoal",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 107,
+    "evento": "Família pressiona transferência",
+    "descricao": "O entorno do atleta quer retorno ao país ou mudança de clube.",
+    "consequencia": "Trate como pressão por saída na próxima janela.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 108,
+    "evento": "Gol contra traumático",
+    "descricao": "Um erro marcante recente afeta a cabeça do atleta nos bastidores.",
+    "consequencia": "Reduza a confiança do jogador por 2 jogos.",
+    "categoria": "Psicológico",
+    "raridade": "Comum"
+  },
+  {
+    "id": 109,
+    "evento": "Hat-trick histórico",
+    "descricao": "Uma grande atuação eleva status e ego de um jogador no grupo.",
+    "consequencia": "Aumente moral do atleta e interesse externo sobre ele.",
+    "categoria": "Elenco",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 110,
+    "evento": "Expulsão polêmica",
+    "descricao": "Uma punição recente gera revolta, pressão e ruído no ambiente do clube.",
+    "consequencia": "Considere suspensão automática e desgaste com arbitragem/mídia.",
+    "categoria": "Disciplina",
+    "raridade": "Comum"
+  },
+  {
+    "id": 111,
+    "evento": "Arbitragem polêmica",
+    "descricao": "Uma decisão externa gera revolta coletiva e discurso público inflamado.",
+    "consequencia": "O clima do clube fica tenso na semana seguinte.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 112,
+    "evento": "Gol nos acréscimos",
+    "descricao": "Um resultado heróico recente muda o clima interno do clube.",
+    "consequencia": "Aumente o moral coletivo nas próximas partidas.",
+    "categoria": "Motivação",
+    "raridade": "Comum"
+  },
+  {
+    "id": 113,
+    "evento": "Técnico se desentende com dirigente",
+    "descricao": "Há uma discussão séria entre treinador e diretor sobre planejamento e elenco.",
+    "consequencia": "A diretoria exige 2 vitórias nos próximos 3 jogos.",
+    "categoria": "Diretoria",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 114,
+    "evento": "Diretoria veta contratação",
+    "descricao": "A comissão técnica tinha um alvo claro, mas os dirigentes barram a negociação.",
+    "consequencia": "Fique sem contratar naquela posição ou naquela janela.",
+    "categoria": "Diretoria",
+    "raridade": "Comum"
+  },
+  {
+    "id": 115,
+    "evento": "Diretoria pressiona mudança tática",
+    "descricao": "Os dirigentes acreditam que o time precisa agradar mais torcida e mídia.",
+    "consequencia": "Mude a formação por 3 jogos.",
+    "categoria": "Diretoria",
+    "raridade": "Comum"
+  },
+  {
+    "id": 116,
+    "evento": "Presidente critica desempenho publicamente",
+    "descricao": "O mandatário fala com a imprensa e aumenta a crise interna.",
+    "consequencia": "Reduza a moral do treinador e trate o próximo jogo como resposta.",
+    "categoria": "Diretoria",
+    "raridade": "Comum"
+  },
+  {
+    "id": 117,
+    "evento": "Diretor quer contratar estrela",
+    "descricao": "A gestão impõe um nome por marketing e imagem.",
+    "consequencia": "Se contratar, escale o jogador por 3 jogos; se não, aumente tensão com a diretoria.",
+    "categoria": "Diretoria",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 118,
+    "evento": "Técnico expõe jogador em coletiva",
+    "descricao": "O treinador critica um atleta em público após uma partida ruim.",
+    "consequencia": "A relação com o jogador despenca e o vestiário reage.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 119,
+    "evento": "Jogador rebate treinador na mídia",
+    "descricao": "O atleta responde publicamente à comissão técnica.",
+    "consequencia": "Crie clima pesado no grupo e considere afastamento de um dos lados.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 120,
+    "evento": "Jornal publica matéria negativa",
+    "descricao": "Sai uma reportagem sobre problemas internos no clube.",
+    "consequencia": "Reduza o moral geral em curto prazo.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 121,
+    "evento": "Jornal revela crise financeira",
+    "descricao": "A imprensa expõe dificuldades econômicas do clube.",
+    "consequencia": "Aumente pressão por vendas e corte gastos.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 122,
+    "evento": "Boato de demissão do técnico",
+    "descricao": "A mídia noticia que o treinador está por um fio.",
+    "consequencia": "Considere o próximo jogo como divisor de águas.",
+    "categoria": "Imprensa",
+    "raridade": "Comum"
+  },
+  {
+    "id": 123,
+    "evento": "Elenco perde confiança no treinador",
+    "descricao": "Parte do grupo já não compra mais o discurso da comissão.",
+    "consequencia": "Reduza o moral coletivo até uma sequência positiva.",
+    "categoria": "Vestiário",
+    "raridade": "Raro"
+  },
+  {
+    "id": 124,
+    "evento": "Capitão tenta mediar crise",
+    "descricao": "A liderança interna organiza conversa entre elenco e comissão.",
+    "consequencia": "Aumente um pouco o moral e estabilize o ambiente.",
+    "categoria": "Vestiário",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 125,
+    "evento": "Jogador reclama de favoritismo",
+    "descricao": "Um atleta entende que o treinador protege outro companheiro.",
+    "consequencia": "Crie ruído interno e baixa de moral individual.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 126,
+    "evento": "Jogador exige ser titular",
+    "descricao": "O atleta condiciona permanência a mais minutos em campo.",
+    "consequencia": "Escale-o nas próximas 2 partidas ou aceite crise contratual.",
+    "categoria": "Vestiário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 127,
+    "evento": "Grupo fechado contra treinador",
+    "descricao": "Uma ala do elenco passa a ignorar instruções e decisões.",
+    "consequencia": "Aplique queda de rendimento e moral por 3 jogos.",
+    "categoria": "Vestiário",
+    "raridade": "Raro"
+  },
+  {
+    "id": 128,
+    "evento": "Auditoria financeira no clube",
+    "descricao": "As contas da gestão anterior entram em revisão.",
+    "consequencia": "Reduza orçamento temporariamente e congele gastos.",
+    "categoria": "Administrativo",
+    "raridade": "Raro"
+  },
+  {
+    "id": 129,
+    "evento": "Clube muda estratégia de mercado",
+    "descricao": "A diretoria decide focar fortemente em jovens e ativos futuros.",
+    "consequencia": "Evite contratar veteranos e priorize sub-23.",
+    "categoria": "Diretoria",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 130,
+    "evento": "Investidor visita o clube",
+    "descricao": "Um possível novo parceiro acompanha rotina, jogos e bastidores.",
+    "consequencia": "Aumente pressão por desempenho e imagem.",
+    "categoria": "Diretoria",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 131,
+    "evento": "Corte de gastos",
+    "descricao": "O clube inicia um plano duro de redução de despesas.",
+    "consequencia": "Venda um jogador até o fim da temporada ou corte investimentos.",
+    "categoria": "Financeiro",
+    "raridade": "Comum"
+  },
+  {
+    "id": 132,
+    "evento": "Acordo comercial inesperado",
+    "descricao": "O clube fecha uma parceria de marketing fora do radar.",
+    "consequencia": "Aumente um pouco o orçamento e a exposição do clube.",
+    "categoria": "Financeiro",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 133,
+    "evento": "Torcida cobra elenco no aeroporto",
+    "descricao": "Na volta de viagem, jogadores são cercados por cobranças fortes.",
+    "consequencia": "Considere pressão psicológica alta no elenco.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 134,
+    "evento": "Torcida pede demissão do treinador",
+    "descricao": "As redes e arquibancadas se voltam contra o comandante.",
+    "consequencia": "Reduza moral da comissão e aumente pressão por resultado.",
+    "categoria": "Torcida",
+    "raridade": "Comum"
+  },
+  {
+    "id": 135,
+    "evento": "Torcida invade CT",
+    "descricao": "Manifestantes interrompem atividade em protesto.",
+    "consequencia": "Aplique ambiente tenso por 2 jogos.",
+    "categoria": "Torcida",
+    "raridade": "Raro"
+  },
+  {
+    "id": 136,
+    "evento": "Campanha de apoio ao treinador",
+    "descricao": "Torcedores se mobilizam para sustentar o técnico.",
+    "consequencia": "Aumente moral do treinador e alivie pressão temporariamente.",
+    "categoria": "Torcida",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 137,
+    "evento": "Torcida idolatra jovem da base",
+    "descricao": "Um garoto vira símbolo popular do momento.",
+    "consequencia": "Aumente minutagem do jovem ou aceite cobrança por usá-lo pouco.",
+    "categoria": "Torcida",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 138,
+    "evento": "Família do jogador critica o clube",
+    "descricao": "Parente do atleta fala mal do técnico, clube ou gestão.",
+    "consequencia": "Piora a relação com o jogador e gera ruído externo.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 139,
+    "evento": "Jogador quer voltar ao país natal",
+    "descricao": "A adaptação cultural falha e o atleta sente saudade de casa.",
+    "consequencia": "Trate como pedido de transferência futuro.",
+    "categoria": "Pessoal",
+    "raridade": "Comum"
+  },
+  {
+    "id": 140,
+    "evento": "Jogador se envolve em polêmica nas redes",
+    "descricao": "Postagem ou comentário repercute muito mal.",
+    "consequencia": "Multa interna e gestão de imagem do atleta.",
+    "categoria": "Mídia",
+    "raridade": "Comum"
+  },
+  {
+    "id": 141,
+    "evento": "Jogador abre negócio paralelo",
+    "descricao": "O atleta passa a dividir foco com empresa, marca ou projeto pessoal.",
+    "consequencia": "Aceite queda leve de foco nos treinos.",
+    "categoria": "Pessoal",
+    "raridade": "Incomum"
+  },
+  {
+    "id": 142,
+    "evento": "Jogador entra em conflito com empresário",
+    "descricao": "A relação com o agente degrada e afeta negociações.",
+    "consequencia": "Crie instabilidade contratual e risco de saída.",
+    "categoria": "Empresário",
+    "raridade": "Comum"
+  },
+  {
+    "id": 143,
+    "evento": "Investigação de manipulação de resultados",
+    "descricao": "Autoridades e imprensa levantam suspeitas graves sobre o clube ou pessoas ligadas a ele.",
+    "consequencia": "A moral do elenco despenca e o ambiente vira crise total.",
+    "categoria": "Crise",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 144,
+    "evento": "Jogador investigado por apostas",
+    "descricao": "Um atleta é investigado por envolvimento com apostas esportivas.",
+    "consequencia": "Suspenda o jogador por 5 jogos.",
+    "categoria": "Crise",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 145,
+    "evento": "Transfer ban da federação",
+    "descricao": "O clube recebe punição e fica impedido de registrar reforços.",
+    "consequencia": "Não faça contratações por 1 temporada.",
+    "categoria": "Administrativo",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 146,
+    "evento": "Documentos falsos de jogador",
+    "descricao": "É descoberta irregularidade grave na documentação de um atleta.",
+    "consequencia": "Venda ou dispense o jogador imediatamente.",
+    "categoria": "Administrativo",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 147,
+    "evento": "Problema fiscal grave",
+    "descricao": "O clube entra em investigação por dívidas ou irregularidades fiscais.",
+    "consequencia": "Reduza significativamente o orçamento.",
+    "categoria": "Financeiro",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 148,
+    "evento": "Técnico quase sai no soco com jogador",
+    "descricao": "Uma discussão em treino sai do controle e quase vira agressão.",
+    "consequencia": "Afaste o jogador ou aceite forte queda de moral do elenco.",
+    "categoria": "Vestiário",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 149,
+    "evento": "Vazamento de áudio do vestiário",
+    "descricao": "Conversas internas comprometedoras caem na internet.",
+    "consequencia": "O grupo perde confiança e o ambiente vira tensão pura.",
+    "categoria": "Imprensa",
+    "raridade": "Raro"
+  },
+  {
+    "id": 150,
+    "evento": "Jogador lidera rebelião no elenco",
+    "descricao": "Um atleta mobiliza colegas contra a comissão técnica.",
+    "consequencia": "Reduza fortemente o moral do grupo e decida entre afastar ou vender o líder.",
+    "categoria": "Vestiário",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 151,
+    "evento": "Demissão de dirigente importante",
+    "descricao": "Uma saída repentina abala a estrutura de comando do clube.",
+    "consequencia": "Aumente instabilidade administrativa e incerteza no mercado.",
+    "categoria": "Diretoria",
+    "raridade": "Raro"
+  },
+  {
+    "id": 152,
+    "evento": "Dono do clube aparece no treino",
+    "descricao": "O proprietário surge no CT para cobrar resultados pessoalmente.",
+    "consequencia": "A pressão nos próximos jogos dispara.",
+    "categoria": "Diretoria",
+    "raridade": "Raro"
+  },
+  {
+    "id": 153,
+    "evento": "Clube atrasa salários por meses",
+    "descricao": "O problema financeiro se agrava além do suportável.",
+    "consequencia": "Reduza o moral geral em nível máximo.",
+    "categoria": "Financeiro",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 154,
+    "evento": "Patrocinador principal entra em falência",
+    "descricao": "O parceiro master quebra e deixa o clube exposto.",
+    "consequencia": "Corte forte no orçamento e revisão de metas.",
+    "categoria": "Financeiro",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 155,
+    "evento": "Venda obrigatória de jogador",
+    "descricao": "A situação financeira força a saída de uma peça importante.",
+    "consequencia": "Venda um jogador relevante do elenco.",
+    "categoria": "Financeiro",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 156,
+    "evento": "Escândalo envolvendo jogador e crime",
+    "descricao": "Um atleta é investigado por crime fora de campo.",
+    "consequencia": "Afaste o jogador por tempo indeterminado.",
+    "categoria": "Crise",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 157,
+    "evento": "Jogador em grande polêmica nas redes",
+    "descricao": "Uma repercussão digital atinge nível nacional e respinga no clube.",
+    "consequencia": "Multa o jogador e afaste-o por 1 jogo.",
+    "categoria": "Mídia",
+    "raridade": "Raro"
+  },
+  {
+    "id": 158,
+    "evento": "Torcida invade estádio após derrota",
+    "descricao": "A revolta foge do controle e gera punição institucional.",
+    "consequencia": "Considere o próximo jogo com portões fechados simbolicamente.",
+    "categoria": "Torcida",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 159,
+    "evento": "Confronto entre torcidas",
+    "descricao": "Há briga generalizada em contexto de jogo e rivalidade.",
+    "consequencia": "Aplique punição financeira ao clube.",
+    "categoria": "Torcida",
+    "raridade": "Raro"
+  },
+  {
+    "id": 160,
+    "evento": "Jogador entra em depressão profunda",
+    "descricao": "O quadro mental se agrava muito e exige parada total.",
+    "consequencia": "Deixe o atleta fora por 6 jogos.",
+    "categoria": "Saúde mental",
+    "raridade": "Crise extrema"
+  },
+  {
+    "id": 161,
+    "evento": "Jogador desaparece por alguns dias",
+    "descricao": "Um atleta some sem contato e vira caso interno sério.",
+    "consequencia": "Suspenda o jogador por 3 jogos.",
+    "categoria": "Disciplina",
+    "raridade": "Raro"
+  },
+  {
+    "id": 162,
+    "evento": "Treinador pede demissão",
+    "descricao": "A crise institucional leva o técnico a ameaçar ou formalizar saída.",
+    "consequencia": "A moral do clube cai drasticamente e a temporada entra em turbulência.",
+    "categoria": "Treinador",
+    "raridade": "Crise extrema"
+  }
+]
