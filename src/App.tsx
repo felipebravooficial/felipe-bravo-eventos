@@ -3,7 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/// <reference types="react" />
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
+import { auth, googleProvider, db } from './firebase';
+import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp,
+  collection,
+  getDocs
+} from 'firebase/firestore';
 import { 
   Trophy, 
   AlertTriangle, 
@@ -29,7 +40,8 @@ import {
   MoreVertical,
   ArrowLeft,
   Download,
-  Upload
+  Upload,
+  Shield,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import eventosData from './eventos.json';
@@ -44,8 +56,13 @@ interface Evento {
 }
 
 export default function App() {
+const [user, setUser] = useState<any>(null);
+const [loadingAuth, setLoadingAuth] = useState(true);
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [isAdmin, setIsAdmin] = useState(false);
+const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [events, setEvents] = useState<Evento[]>(() => {
-    const saved = localStorage.getItem('fm_events_db');
+      const saved = localStorage.getItem('fm_events_db');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -110,7 +127,17 @@ export default function App() {
     return localStorage.getItem('fm_club_image') || '';
   });
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+  const [allUsers, setAllUsers] = useState<any[]>([]);
 
+  const [adminStats, setAdminStats] = useState({
+    total: 0,
+    admins: 0,
+    members: 0,
+    active: 0
+  });
+  const [adminSearch, setAdminSearch] = useState("");
+  const [adminFilter, setAdminFilter] = useState("todos");
+  const [adminStatusFilter, setAdminStatusFilter] = useState("todos");
   // States for inline header editing
   const [isEditingClubNameInline, setIsEditingClubNameInline] = useState(false);
   const [inlineClubName, setInlineClubName] = useState(clubName);
@@ -119,32 +146,375 @@ export default function App() {
   const [tempSeasonNumber, setTempSeasonNumber] = useState(season);
   const [tempClubName, setTempClubName] = useState(clubName);
   const [tempClubImage, setTempClubImage] = useState(clubImage);
+  const loadAdminDashboard = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "users"));
+    console.log("DOCUMENTOS FIRESTORE:", snapshot.docs.length);
 
+    const users = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    console.log("USUÁRIOS ENCONTRADOS:", users);
+    setAllUsers(users);
+
+setAdminStats({
+  total: users.length,
+  admins: users.filter((u: any) => u.role === "admin").length,
+  members: users.filter((u: any) => u.role === "member").length,
+  active: users.filter((u: any) => u.active === true).length
+});
+
+console.log("STATS:", {
+  total: users.length,
+  admins: users.filter((u: any) => u.role === "admin").length,
+  members: users.filter((u: any) => u.role === "member").length,
+  active: users.filter((u: any) => u.active === true).length
+});
+    
+  } catch (error) {
+    console.error("Erro ao carregar dashboard:", error);
+  }
+  
+};
+const formatLastLogin = (lastLogin: string) => {
+  if (!lastLogin) return "-";
+
+  const loginDate = new Date(lastLogin);
+  const now = new Date();
+
+  const diffMs = now.getTime() - loginDate.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return `Hoje às ${loginDate.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit"
+    })}`;
+  }
+
+  if (diffDays === 1) {
+    return "Ontem";
+  }
+
+  if (diffDays <= 7) {
+    return `Há ${diffDays} dias`;
+  }
+
+  return loginDate.toLocaleDateString("pt-BR");
+};
+const exportUsersCSV = () => {
+  const headers = [
+    "Nome",
+    "Email",
+    "Cargo",
+    "Status",
+    "Último Login",
+    "Data Cadastro"
+  ];
+
+  const rows = allUsers.map((u: any) => [
+    u.displayName || "",
+    u.email || "",
+    u.role || "",
+    u.active ? "Ativo" : "Bloqueado",
+    u.lastLogin || "",
+    u.createdAt || ""
+  ]);
+
+  const csvContent = [
+    headers.join(","),
+    ...rows.map(row => row.join(","))
+  ].join("\n");
+
+  const blob = new Blob([csvContent], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+
+  link.download =
+    `usuarios-${new Date().toLocaleDateString("pt-BR")}.csv`;
+
+  link.click();
+};
+const updateUserRole = async (
+  userId: string,
+  role: "admin" | "member"
+) => {
+  if (
+  user?.uid === userId &&
+  role === "member"
+) {
+  alert("Você não pode remover seu próprio acesso de administrador.");
+  return;
+}
+const totalAdmins = allUsers.filter(
+  (u: any) => u.role === "admin"
+).length;
+
+const targetUser = allUsers.find(
+  (u: any) => u.id === userId
+);
+
+if (
+  targetUser?.role === "admin" &&
+  role === "member" &&
+  totalAdmins <= 1
+) {
+  alert("É necessário manter pelo menos 1 administrador.");
+  return;
+}
+  try {
+    await setDoc(
+      doc(db, "users", userId),
+      {
+        role
+      },
+      { merge: true }
+    );
+
+    await loadAdminDashboard();
+
+  } catch (error) {
+    console.error("Erro ao atualizar cargo:", error);
+  }
+};
+
+const updateUserStatus = async (
+  userId: string,
+  active: boolean
+) => {
+  if (user?.uid === userId && active === false) {
+  alert("Você não pode bloquear sua própria conta.");
+  return;
+}
+  try {
+    await setDoc(
+      doc(db, "users", userId),
+      {
+        active
+      },
+      { merge: true }
+    );
+
+    await loadAdminDashboard();
+
+  } catch (error) {
+    console.error("Erro ao atualizar status:", error);
+  }
+};
+  const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+
+const userRef = doc(db, "users", result.user.uid);
+const existingUser = await getDoc(userRef);
+if (!existingUser.exists()) {
+  await setDoc(userRef, {
+    email: result.user.email,
+    displayName: result.user.displayName,
+    active: false,
+    role: "member",
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date().toISOString(),
+  });
+}
+
+const userSnap = await getDoc(userRef);
+
+if (!userSnap.exists()) {
+  alert("Erro ao verificar usuário.");
+  return;
+}
+
+const userData = userSnap.data();
+setIsAdmin(userData.role === "admin");
+if (userData.active !== true) {
+  await auth.signOut();
+
+  alert(
+    "Sua conta está aguardando aprovação. Entre em contato com Felipe Bravo."
+  );
+
+  setUser(null);
+  setIsAuthenticated(false);
+
+  return;
+}
+
+setUser(result.user);
+setIsAuthenticated(true);
+
+console.log("Usuário logado:", result.user.email);
+  } catch (error) {
+    console.error("Erro ao logar:", error);
+  }
+};
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+
+    if (!currentUser) {
+      setUser(null);
+      setIsAuthenticated(false);
+      setLoadingAuth(false);
+      return;
+    }
+
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        await auth.signOut();
+        setUser(null);
+        setIsAuthenticated(false);
+        setLoadingAuth(false);
+        return;
+      }
+
+      const userData = userSnap.data();
+
+      await setDoc(
+        doc(db, "users", currentUser.uid),
+        {
+          displayName: currentUser.displayName || "Sem nome",
+          email: currentUser.email || "",
+          lastLogin: serverTimestamp()
+        },
+        { merge: true }
+      );
+      setIsAdmin(userData.role === "admin");
+      if (userData.active !== true) {
+        await auth.signOut();
+
+        setUser(null);
+        setIsAuthenticated(false);
+        setLoadingAuth(false);
+
+        return;
+      }
+
+      setUser(currentUser);
+      await setDoc(
+        doc(db, "users", currentUser.uid),
+        {
+          lastLogin: new Date().toISOString()
+        },
+        { merge: true }
+      );
+      setIsAuthenticated(true);
+
+if (userData.save) {
+  if (userData.save.clubName) {
+    setClubName(userData.save.clubName);
+    setInlineClubName(userData.save.clubName);
+  }
+
+  if (userData.save.clubImage) {
+    setClubImage(userData.save.clubImage);
+  }
+
+  if (userData.save.season) {
+    setSeason(userData.save.season);
+  }
+
+  if (userData.save.usedEventIds) {
+    setUsedEventIds(userData.save.usedEventIds);
+  }
+
+  if (userData.save.history) {
+    setHistory(userData.save.history);
+  }
+
+  if (userData.save.events) {
+    setEvents(userData.save.events);
+  }
+
+  console.log("SAVE CARREGADO DO FIRESTORE");
+}
+
+    } catch (error) {
+      console.error(error);
+
+      setUser(null);
+      setIsAuthenticated(false);
+    }
+
+    setLoadingAuth(false);
+
+  });
+
+  return () => unsubscribe();
+
+}, []);
+
+const saveToFirestore = async () => {
+  if (!user) return;
+
+  try {
+    console.log("SALVANDO NO FIRESTORE");
+
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        save: {
+          clubName,
+          season,
+          usedEventIds,
+          history,
+          events,
+          clubImage,
+        },
+      },
+      { merge: true }
+    );
+
+    console.log("SALVO COM SUCESSO");
+  } catch (error) {
+    console.error("Erro ao salvar no Firestore:", error);
+  }
+};
   // Save state to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('fm_events_db', JSON.stringify(events));
-  }, [events]);
+  localStorage.setItem('fm_events_db', JSON.stringify(events));
 
-  useEffect(() => {
-    localStorage.setItem('fm_club_name', clubName);
-    setInlineClubName(clubName);
-  }, [clubName]);
+  saveToFirestore();
+}, [events]);
 
-  useEffect(() => {
-    localStorage.setItem('fm_club_image', clubImage);
-  }, [clubImage]);
+useEffect(() => {
+  localStorage.setItem('fm_club_name', clubName);
+  setInlineClubName(clubName);
 
-  useEffect(() => {
-    localStorage.setItem('fm_used_event_ids', JSON.stringify(usedEventIds));
-  }, [usedEventIds]);
+  saveToFirestore();
+}, [clubName]);
 
-  useEffect(() => {
-    localStorage.setItem('fm_history', JSON.stringify(history));
-  }, [history]);
+useEffect(() => {
+  localStorage.setItem('fm_club_image', clubImage);
 
-  useEffect(() => {
-    localStorage.setItem('fm_season', season.toString());
-  }, [season]);
+  saveToFirestore();
+}, [clubImage]);
+
+useEffect(() => {
+  localStorage.setItem('fm_used_event_ids', JSON.stringify(usedEventIds));
+
+  saveToFirestore();
+}, [usedEventIds]);
+
+useEffect(() => {
+  localStorage.setItem('fm_history', JSON.stringify(history));
+
+  saveToFirestore();
+}, [history]);
+
+useEffect(() => {
+  localStorage.setItem('fm_season', season.toString());
+
+  saveToFirestore();
+}, [season]);
 
   const totalEventsCount = events.length;
   const usedEventsCount = usedEventIds.length;
@@ -442,7 +812,38 @@ export default function App() {
       default: return <Info className="w-4 h-4" />;
     }
   };
+if (loadingAuth) {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center text-white">
+      Carregando...
+    </div>
+  );
+}
 
+if (!isAuthenticated) {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center px-6">
+      <div className="max-w-md w-full bg-zinc-900 border border-zinc-800 rounded-3xl p-8 text-center">
+
+        <h1 className="text-3xl font-bold text-white mb-2">
+          GERADOR DE EVENTOS
+        </h1>
+
+        <p className="text-zinc-400 mb-8">
+          EA FC
+        </p>
+
+        <button
+          onClick={loginWithGoogle}
+          className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-zinc-200 transition"
+        >
+          Entrar com Google
+        </button>
+
+      </div>
+    </div>
+  );
+}
   return (
     <div className="min-h-screen bg-[#050505] text-zinc-100 font-sans selection:bg-emerald-500/30 overflow-x-hidden">
       {/* Background Glows */}
@@ -476,7 +877,23 @@ export default function App() {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col">
-          
+        {isAdmin && (
+          <div className="bg-red-600 text-white flex items-center justify-center gap-4 py-2 font-bold uppercase tracking-widest">
+          <span>👑 ADMINISTRADOR</span>
+
+          <button
+            type="button"
+           onClick={() => {
+            console.log("BOTÃO ADMIN CLICADO");
+            loadAdminDashboard();
+            setShowAdminPanel(true);
+          }}
+            className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg text-xs transition"
+          >
+            📊 PAINEL ADMIN
+          </button>
+          </div>
+        )}
           {/* Top Header */}
           <header className="px-6 py-8 md:px-12 flex items-center justify-between">
             <div>
@@ -535,23 +952,37 @@ export default function App() {
                       <Edit className="w-4 h-4 text-emerald-400" />
                     </div>
                   </div>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
+                  <input
+                    type="file"
+                    accept="image/*"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (ev) => {
-                          if (ev.target?.result) setClubImage(ev.target.result as string);
-                        };
-                        reader.readAsDataURL(file);
+
+                      if (!file) return;
+
+                      if (file.size > 200 * 1024) {
+                        alert(
+                          "Imagem muito grande!\n\n" +
+                          "Tamanho máximo: 200 KB\n" +
+                          "Recomendado: 300x300 pixels."
+                        );
+                        return;
                       }
-                    }} 
-                    className="hidden" 
+
+                      const reader = new FileReader();
+
+                      reader.onload = (ev) => {
+                        if (ev.target?.result) {
+                          setClubImage(ev.target.result as string);
+                        }
+                      };
+
+                      reader.readAsDataURL(file);
+                    }}
+                    className="hidden"
                   />
                 </label>
-              </div>
+            </div>
             </div>
           </header>
 
@@ -1444,55 +1875,73 @@ export default function App() {
                   </div>
 
                   {/* Alterar Escudo do Clube */}
-                  <div className="space-y-3 p-6 bg-white/[0.01] rounded-3xl border border-white/5 flex items-center gap-6">
-                    <div className="w-16 h-16 rounded-xl bg-white/5 border border-white/10 p-1 flex items-center justify-center overflow-hidden shrink-0 relative">
+                  <div className="space-y-3 p-6 bg-white/[0.01] rounded-3xl border border-white/5 flex items-center gap-3">
+                    <div className="w-16 h-16 rounded-xl bg-white/5 border border-white/10 p-1 flex items-center justify-center shrink-0 relative">
                       {tempClubImage ? (
-                        <img 
-                          src={tempClubImage} 
-                          alt="Preview" 
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <svg viewBox="0 0 100 100" className="w-full h-full text-zinc-700 fill-current p-1 col-span-1">
-                          <path d="M50,8 L88,24 C88,62 50,92 50,92 C50,92 12,62 12,24 Z" fill="none" stroke="currentColor" strokeWidth="6" />
-                          <circle cx="50" cy="48" r="14" fill="none" stroke="currentColor" strokeWidth="4" />
-                          <path d="M50,34 L50,42 M50,54 L50,62 M36,48 L44,48 M56,48 L64,48" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="flex-1 space-y-2">
-                      <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] block">Escudo do Clube</label>
-                      <div className="flex gap-2">
-                        <label className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-[10px] font-black text-white text-center uppercase tracking-wider cursor-pointer transition-all active:scale-95 block">
-                          Fazer Upload
-                          <input 
-                            type="file" 
-                            accept="image/*" 
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.onload = (ev) => {
-                                  if (ev.target?.result) setTempClubImage(ev.target.result as string);
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }} 
-                            className="hidden" 
-                          />
-                        </label>
-                        {tempClubImage && (
-                          <button
-                            type="button"
-                            onClick={() => setTempClubImage('')}
-                            className="px-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-xl text-red-500 text-xs transition-all active:scale-95 flex items-center justify-center"
-                            title="Remover imagem (usar padrão)"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          <>
+                            <img
+                              src={tempClubImage}
+                              alt="Preview"
+                              className="w-full h-full object-contain"
+                            />
+                                                       
+                           <button
+                              type="button"
+                              onClick={() => setTempClubImage('')}
+                              className="absolute top-0 right-0 w-8 h-8 bg-red-500 border-2 border-white rounded-full flex items-center justify-center text-white z-50"
+                              title="Remover imagem"
+                            >
+                            <Trash2 className="w-3 h-3" />  
+                            </button>
+                          </>
+                        ) : (
+                          <Shield className="w-full h-full text-zinc-700 p-2" />
                         )}
-                      </div>
                     </div>
+                    <div className="flex flex-col w-24">
+  <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm font-bold transition-all">
+    <Upload className="w-4 h-4" />
+    Alterar Escudo
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={(e) => {
+        const file = e.target.files?.[0];
+
+        if (!file) return;
+
+        if (file.size > 200 * 1024) {
+          alert(
+            "Imagem muito grande!\n\n" +
+            "Tamanho máximo: 200 KB\n" +
+            "Recomendado: 300x300 pixels."
+          );
+          return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (ev) => {
+          if (ev.target?.result) {
+            setTempClubImage(ev.target.result as string);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }}
+      className="hidden"
+    />
+  </label>
+
+  <p className="text-[10px] text-zinc-500 mt-1 leading-tight">
+  PNG/JPG
+  <br />
+  Máx. 200 KB
+  <br />
+  300×300 px
+</p>
+</div>
                   </div>
 
                   {/* Used Events Control */}
@@ -1693,6 +2142,268 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+      {/* Admin Panel */}
+<AnimatePresence>
+  {showAdminPanel && (
+    <div className="fixed inset-0 z-[130] flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setShowAdminPanel(false)}
+        className="absolute inset-0 bg-black/90 backdrop-blur-md"
+      />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 30 }}
+        className="relative w-full max-w-6xl glass rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden"
+      >
+        <div className="p-8 md:p-10 space-y-8">
+
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-emerald-500 text-xs uppercase tracking-[0.4em] font-bold">
+                Administração
+              </p>
+
+              <h2 className="text-3xl md:text-4xl font-display font-black italic text-white">
+                Painel Admin
+              </h2>
+            </div>
+            <div className="mt-4">
+              <input
+                type="text"
+                placeholder="🔍 Buscar por nome ou email..."
+                value={adminSearch}
+                onChange={(e) => setAdminSearch(e.target.value)}
+                className="w-64 mr-8 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-500 focus:outline-none focus:border-emerald-500"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2 mt-4">
+              <button
+                onClick={() => setAdminStatusFilter("todos")}
+                className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold"
+              >
+                TODOS
+              </button>
+
+              <button
+                onClick={() => setAdminStatusFilter("admins")}
+                className="px-3 py-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 text-xs font-bold"
+              >
+                ADMINS
+              </button>
+
+              <button
+                onClick={() => setAdminStatusFilter("members")}
+                className="px-3 py-2 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 text-xs font-bold"
+              >
+                MEMBERS
+              </button>
+             <div className="w-full"></div>
+              <button
+                onClick={() => setAdminStatusFilter("ativos")}
+                className="px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 text-xs font-bold"
+              >
+                ATIVOS
+              </button>
+
+              <button
+                onClick={() => setAdminStatusFilter("bloqueados")}
+                className="px-3 py-2 rounded-lg bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 text-xs font-bold"
+              >
+                BLOQUEADOS
+              </button>
+            </div>
+            <button
+              onClick={exportUsersCSV}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold"
+            >
+              📥 Exportar CSV
+            </button>
+            <button
+              onClick={() => setShowAdminPanel(false)}
+              className="p-3 rounded-xl hover:bg-white/5"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            <div className="glass rounded-2xl p-5">
+              <p className="text-zinc-500 text-xs uppercase">Usuários</p>
+              <h3 className="text-3xl font-black text-white">
+                {adminStats.total}
+              </h3>
+            </div>
+
+            <div className="glass rounded-2xl p-5">
+              <p className="text-zinc-500 text-xs uppercase">Admins</p>
+              <h3 className="text-3xl font-black text-red-400">
+                {adminStats.admins}
+              </h3>
+            </div>
+
+            <div className="glass rounded-2xl p-5">
+              <p className="text-zinc-500 text-xs uppercase">Members</p>
+              <h3 className="text-3xl font-black text-blue-400">
+                {adminStats.members}
+              </h3>
+            </div>
+
+            <div className="glass rounded-2xl p-5">
+              <p className="text-zinc-500 text-xs uppercase">Ativos</p>
+              <h3 className="text-3xl font-black text-emerald-400">
+                {adminStats.active}
+              </h3>
+            </div>
+
+          </div>
+
+          <div className="glass rounded-3xl overflow-hidden">
+
+            <table className="w-full">
+
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left p-4">Nome</th>
+                  <th className="text-left p-4">Email</th>
+                  <th className="text-left p-4">Cargo</th>
+                  <th className="text-left p-4">Status</th>
+                  <th className="text-left p-4">Último Login</th>
+                  <th className="text-left p-4">Ações</th>                  
+                </tr>
+              </thead>
+
+              <tbody>
+                {[...allUsers]
+                .sort((a: any, b: any) => {
+                  if (a.role === "admin" && b.role !== "admin") return -1;
+                  if (a.role !== "admin" && b.role === "admin") return 1;
+
+                  if (a.active === true && b.active !== true) return -1;
+                  if (a.active !== true && b.active === true) return 1;
+
+                  return 0;
+                })
+                  .filter((u: any) => {
+                    if (adminSearch) {
+                      const search = adminSearch.toLowerCase();
+
+                      const matchesSearch =
+                        (u.displayName || "").toLowerCase().includes(search) ||
+                        (u.email || "").toLowerCase().includes(search);
+
+                      if (!matchesSearch) return false;
+                    }
+
+                    if (adminStatusFilter === "admins") {
+                      return u.role === "admin";
+                    }
+
+                    if (adminStatusFilter === "members") {
+                      return u.role === "member";
+                    }
+
+                    if (adminStatusFilter === "ativos") {
+                      return u.active === true;
+                    }
+
+                    if (adminStatusFilter === "bloqueados") {
+                      return u.active !== true;
+                    }
+
+                    return true;
+                  })
+                  .map((u: any) => (
+                  <tr
+                    key={u.id}
+                    className="border-b border-white/5"
+                  >
+                    <td className="p-4 text-white">
+                      {u.displayName}
+                    </td>
+
+                    <td className="p-4 text-zinc-400">
+                      {u.email}
+                    </td>
+
+                    <td className="p-4">
+                      {u.role === "admin" ? (
+                        <span className="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-bold uppercase">
+                          Admin
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold uppercase">
+                          Member
+                        </span>
+                      )}
+                    </td>
+
+                    <td className="p-4">
+                      {u.active ? (
+                        <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase">
+                          Ativo
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-bold uppercase">
+                          Bloqueado
+                        </span>
+                      )}
+                    </td>
+                      <td className="p-4 text-zinc-400 text-xs">
+                      {formatLastLogin(u.lastLogin)}
+                      </td>
+                    <td className="p-4">
+                      <div className="flex gap-2 flex-wrap">
+
+                        <button
+                          onClick={() => updateUserRole(u.id, "admin")}
+                          className="px-2 py-1 rounded bg-red-500 text-white text-xs"
+                        >
+                          👑 Admin
+                        </button>
+
+                        <button
+                          onClick={() => updateUserRole(u.id, "member")}
+                          className="px-2 py-1 rounded bg-blue-500 text-white text-xs"
+                        >
+                          👤 Member
+                        </button>
+
+                        <button
+                          onClick={() => updateUserStatus(u.id, false)}
+                          className="px-2 py-1 rounded bg-yellow-500 text-black text-xs"
+                        >
+                          🚫 Bloquear
+                        </button>
+
+                        <button
+                          onClick={() => updateUserStatus(u.id, true)}
+                          className="px-2 py-1 rounded bg-emerald-500 text-black text-xs"
+                        >
+                          ✅ Aprovar
+                        </button>
+
+                      </div>
+                    </td>
+
+                  </tr>
+                ))}
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
 
       {/* Footer */}
           <footer className="px-12 py-8 border-t border-white/5 flex items-center justify-center">
